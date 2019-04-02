@@ -19,9 +19,9 @@ class Question(models.Model):
     class Meta: 
         ordering = ['-date_added']
 
-    def get_absolute_url(self):
-        """Returns the url to access a particular instance of MyModelName."""
-        return reverse('question_detail', kwargs={"slug": self.slug})
+    # def get_absolute_url(self):
+    #     """Returns the url to access a particular instance of MyModelName."""
+    #     return reverse('question_detail', kwargs={"slug": self.slug})
 
     def __str__(self):
         return self.title
