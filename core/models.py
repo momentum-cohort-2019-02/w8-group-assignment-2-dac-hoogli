@@ -11,7 +11,6 @@ class Question(models.Model):
     """Model representing the intracacies of a question"""
     title = models.CharField(max_length=200, null=True, blank=True)
     author = models.ForeignKey(User, related_name='questions', on_delete=models.CASCADE)
-    url = models.URLField(max_length=200, null=True, blank=True)
     description = models.TextField(max_length=2000, null=True, blank=True)
     date_added = models.DateField('Date Added', auto_now_add=True, null=True, blank=True)
     slug = models.SlugField(unique=True)
