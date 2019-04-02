@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+ 
+{% block content %}
+  <h1 class="h1">HOME</h1>
+  <div>
+    <form method="GET" action="{% url 'index' %}" class="form-group">
+      {{ sortform.as_p }}
+      <button type="submit" class="btn btn-primary">Sort</button>
+    </form>  
+    {% for post in posts %}
+    <div class=".container-fluid">  
+      <div>
+        <a class="h3" href="{{ post.url }}"><p>{{ post.title }}</p></a>
+        {% if request.user.is_authenticated %}
+          <form action="{% url 'like_post' slug=post.slug %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            {% if request.user not in post.liked_by.all %}
+              <button type="submit" class="btn btn-primary">
+                ⬆
+              </button>
+            {% else %}
+              <p>✅</p>
+            {% endif %}   
+          </form>
+        {% endif %}
+      </div>
+      <code class="h4"><p>Posted By: 
+        <a href="{% url 'profile_page' username=post.author.username %}">{{ post.author }}</a>
+      </p></code>
+      {% if post.audio %}
+        <audio controls="">
+          <source src="{{ post.audio.url }}" type="audio/wav">
+          <source src="{{ post.audio.url }}" type="audio/mpeg">
+        </audio>
+        <br>
+        <br>
+      {% endif %}
+      <code class="h4">{{ post.description}}</code>
+      <code class="h4"><h4>{{ post.date_added }}</h4></code>
+      <p class="h4">Likes: {{ post.liked_by.count }}</p>
+      <p><a class="h4" href="{{ post.get_absolute_url }}">
+        Comments: {{ post.comments.count }}</a></p>
+      {% if request.user.is_authenticated %}
+      <a class="h4" href="{{ post.get_absolute_url }}
+      "><h4>Reply</h4></a>
+      {% endif %}
+    </div>
+    <br>
+    <br>
+    <br>
+    {% endfor %}
+    {% if request.user.is_authenticated %}
+      <div class=""> 
+        <div class="">
+          <h3>Make a Post:</h3>
+          <form method="POST" action="{% url 'index' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Post</button>
+          </form>
+        </div>
+      </div>
+    {% endif %}
+    <div class="pagination">
+      <div>
+            {% if posts.has_previous %}
+                <a href="?page=1" class="page-item" class="page-link">&laquo; first</a>
+                <a href="?page={{ posts.previous_page_number }}" class="page-link" aria-label="Previous"> previous </a>
+            {% endif %}
+    
+            <span class="aria-hidden="true"">
+                Page {{ posts.number }} of {{ posts.paginator.num_pages }}
+            </span>
+    
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}" aria-label="Next" class="page-link"> next</a>
+                <a href="?page={{ posts.paginator.num_pages }}" class="page-item" class="page-link"> last &raquo;</a>
+            {% endif %}
+        </div>
+      </div>
+  </div>
+{% endblock %}
+
+</html>
