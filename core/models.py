@@ -14,14 +14,11 @@ class Question(models.Model):
     description = models.TextField(max_length=2000, null=True, blank=True)
     date_added = models.DateField('Date Added', auto_now_add=True, null=True, blank=True)
     slug = models.SlugField(unique=True)
+    liked_by = models.ManyToManyField(to=User, related_name='liked_questions', blank=True)
 
     # Metadata - setting order by date question is added
     class Meta: 
         ordering = ['-date_added']
-
-    # def get_absolute_url(self):
-    #     """Returns the url to access a particular instance of MyModelName."""
-    #     return reverse('question_detail', kwargs={"slug": self.slug})
 
     def __str__(self):
         return self.title
@@ -71,6 +68,9 @@ class Star(models.Model):
     user_star = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE, related_name="stars")
     starred_at = models.DateTimeField(auto_now_add=True)
+
+
+
 
 
 
