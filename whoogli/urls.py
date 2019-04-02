@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include, re_path
 from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -36,6 +36,8 @@ urlpatterns += [
 
 urlpatterns += [
     path('', RedirectView.as_view(url='/core/', permanent=True)),
+    path('accounts/profile/', RedirectView.as_view(url='/posts/', permanent=True)),
+    re_path(r'^accounts/', include('registration.backends.default.urls')),
 ]
 
 # Use static() to add url mapping to serve static files during development (only)
