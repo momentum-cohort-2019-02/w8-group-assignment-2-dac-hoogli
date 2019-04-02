@@ -47,3 +47,17 @@ class Question(models.Model):
             slug = base_slug + "-" + str(n)
 
         self.slug = slug[:50]
+
+class Answer(models.Model):
+    """Allows logged in User to answer on a particular Question."""
+    user_answer = models.TextField(null=True)
+    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name="answers")
+    question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE, related_name="answers")
+    answer_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    class Meta:
+        ordering = ['-answer_time']
+
+    def __str__(self):
+        """String for representing the string representation of object (in Admin site etc.)."""
+        return self.user_answer
