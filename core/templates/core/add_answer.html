@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<div class=".container-fluid">  
+        <div class="">
+          <a class="h3" href="{{ post.url }}"><p>{{ post.title }}</p></a>
+          <code class=""><p>Posed By:{{ Question.author }}</p></code>
+          <code class="h4">{{ Question.description}}</code>
+          <code class="h4"><h4>{{ Question.date_added }}</h4></code>
+          <a class="" href="{{ Question.get_absolute_url }}
+          "><h4>Reply</h4></a>  
+        </div>   
+        <br>
+        <a href="{% url 'add_answer' slug=Question.slug %}" > leave a comment </a>   
+        {% for answer in answers %}
+            <p>{{ Answer.dated_added }}</p>
+            <p> replied to {{ Answer.replying_to }}</p>
+            <p> {{ Answer.author}}</p>
+            <p> {{ Answer.text }}</p>
+            {% empty %}
+           
+            {% endfor %}
+
+
+
+
+
+
+
+
+<h1> add new answer </h1>
+<form method="POST"> {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+    {% endblock %}
+
+</div>

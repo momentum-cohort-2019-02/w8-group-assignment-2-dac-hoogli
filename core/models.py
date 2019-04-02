@@ -13,15 +13,12 @@ class Question(models.Model):
     author = models.ForeignKey(User, related_name='questions', on_delete=models.CASCADE)
     description = models.TextField(max_length=2000, null=True, blank=True)
     date_added = models.DateField('Date Added', auto_now_add=True, null=True, blank=True)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(unique=True)
+    liked_by = models.ManyToManyField(to=User, related_name='liked_questions', blank=True)
 
     # Metadata - setting order by date question is added
     class Meta: 
         ordering = ['-date_added']
-
-    # def get_absolute_url(self):
-    #     """Returns the url to access a particular instance of MyModelName."""
-    #     return reverse('question_detail', kwargs={"slug": self.slug})
 
     def __str__(self):
         return self.title
@@ -46,6 +43,9 @@ class Question(models.Model):
             slug = base_slug + "-" + str(n)
 
         self.slug = slug[:50]
+    
+    def get_absolute_url(self):
+        return reverse('question_detail', kwargs={"slug": self.slug})
 
 class Answer(models.Model):
     """Allows logged in User to answer on a particular Question."""
@@ -53,6 +53,8 @@ class Answer(models.Model):
     author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name="answers")
     question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE, related_name="answers")
     answer_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    liked_by = models.ManyToManyField(to=User, related_name="liked_answers", blank=True)
+    
 
     class Meta:
         ordering = ['-answer_time']
@@ -60,3 +62,16 @@ class Answer(models.Model):
     def __str__(self):
         """String for representing the string representation of object (in Admin site etc.)."""
         return self.user_answer
+
+
+class Star(models.Model):
+    user_star = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE, related_name="stars")
+    starred_at = models.DateTimeField(auto_now_add=True)
+
+
+
+
+
+
+
