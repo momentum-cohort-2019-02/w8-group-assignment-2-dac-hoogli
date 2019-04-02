@@ -36,7 +36,7 @@ urlpatterns += [
 
 urlpatterns += [
     path('', RedirectView.as_view(url='/core/', permanent=True)),
-    path('accounts/profile/', RedirectView.as_view(url='/posts/', permanent=True)),
+    path('accounts/profile/', RedirectView.as_view(url='/questions/', permanent=True)),
     re_path(r'^accounts/', include('registration.backends.default.urls')),
 ]
 
