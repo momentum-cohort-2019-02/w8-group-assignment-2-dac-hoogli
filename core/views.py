@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from core.models import Question, Answer, Star
-from .forms import QuestionForm
+from .forms import QuestionForm, AnswerForm 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
  
@@ -25,13 +25,22 @@ def index(request):
 
     form = QuestionForm()
 
-    return render(request, 'core/index.html', context= {'answers':answers, 'questions':questions})
+    return render(request, 'core/index.html', context= {'answers':answers, 'questions':questions, 'form':form })
 
 
 def question_detail(request, slug):
     question = Question.objects.get(slug=slug)
     answers = question.answers.all() 
-    return render(request, 'core/question_detail.html', context={'question': question, 'answers':answers})
+    if request.method == 'POST':
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.question = question 
+            answer.save()
+            return redirect('question_detail', slug=question.slug)
+   
+    form = AnswerForm()
+    return render(request, 'core/question_detail.html', context = {'form': form, 'question': question, 'answers': answers })
 
 def profile(request, username):
     user = User.objects.get(username=username)
@@ -42,22 +51,6 @@ def profile(request, username):
     # posts = paginator.get_page(page)
 
     return render(request, 'core/profile_page.html', context={'user': user, 'questions': questions})
-
-def add_answer(request, slug):
-    question = get_object_or_404(Question, slug=slug)
-    if request.method == 'POST':
-        form = AnswerForm(request.POST)
-        if form.is_valid():
-            answer = form.save(commit=False)
-            answer.question = question 
-            answer.save()
-            return redirect('question_detail', slug=post.slug)
-   
-    form = AnswerForm()
-    template = 'core/add_answer.html'
-    context = {'form': form, 'question': question }
-
-    return render(request, template, context)
     
 @login_required
 def like_question(request, slug):
