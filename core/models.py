@@ -10,11 +10,12 @@ User = get_user_model()
 class Question(models.Model):
     """Model representing the intracacies of a question"""
     title = models.CharField(max_length=200, null=True, blank=True)
-    author = models.ForeignKey(User, related_name='questions', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name='authored_questions', on_delete=models.CASCADE)
     description = models.TextField(max_length=2000, null=True, blank=True)
     date_added = models.DateField('Date Added', auto_now_add=True, null=True, blank=True)
     slug = models.SlugField(unique=True)
     liked_by = models.ManyToManyField(to=User, related_name='liked_questions', blank=True)
+
 
     # Metadata - setting order by date question is added
     class Meta: 
@@ -50,11 +51,11 @@ class Question(models.Model):
 class Answer(models.Model):
     """Allows logged in User to answer on a particular Question."""
     user_answer = models.TextField(null=True)
-    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name="answers")
+    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name="authored_answers")
     question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE, related_name="answers")
     answer_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     liked_by = models.ManyToManyField(to=User, related_name="liked_answers", blank=True)
-    
+  
 
     class Meta:
         ordering = ['-answer_time']
@@ -65,7 +66,7 @@ class Answer(models.Model):
 
 
 class Star(models.Model):
-    user_star = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user_star = models.ForeignKey(User, related_name='authored_stars',on_delete=models.CASCADE, null=True)
     question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE, related_name="stars")
     starred_at = models.DateTimeField(auto_now_add=True)
 
