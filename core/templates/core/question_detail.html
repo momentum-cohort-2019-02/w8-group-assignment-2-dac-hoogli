@@ -15,5 +15,12 @@
 <p>There are no answers currently.</p>
 {% endif %}
 </div>
-
+<div class="addNewAnswer">
+<h3>Nice People Answer Here:</h3>
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit">Submit Answer</button>
+</form>
+</div>
 {% endblock %}
