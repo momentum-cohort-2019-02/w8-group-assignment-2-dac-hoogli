@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from core.models import Question, Answer
+from core.models import Question, Answer, Star
 from .forms import QuestionForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
  
 
 
@@ -58,7 +59,7 @@ def add_answer(request, slug):
 
     return render(request, template, context)
     
-#@login_required
+@login_required
 def like_question(request, slug):
     question = Question.objects.get(slug=slug)
     if request.user not in question.liked_by.all():
@@ -67,9 +68,9 @@ def like_question(request, slug):
         question.liked_by.remove(request.user)
     return redirect(to='index')
 
-#@login_required
+@login_required
 def delete_question(request, slug):
     question = Question.objects.get(slug=slug)
     question.delete()
     return redirect(to='index')
-   
+

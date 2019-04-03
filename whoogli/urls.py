@@ -21,20 +21,12 @@ from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from core import views
 
+#Add URL maps to redirect the base URL to our application
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-]
-
-# Use include() to add paths from the catalog application 
-
-
-urlpatterns += [
-    path('core/', include('core.urls')),
-]
-#Add URL maps to redirect the base URL to our application
-
-urlpatterns += [
+    path('<slug:slug>/', views.question_detail, name='question_detail'),
     path('', RedirectView.as_view(url='/core/', permanent=True)),
     path('accounts/profile/', RedirectView.as_view(url='/questions/', permanent=True)),
     re_path(r'^accounts/', include('registration.backends.default.urls')),

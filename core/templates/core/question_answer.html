@@ -2,12 +2,13 @@
 
 {% block content%}
 <h1>{{question.title}}</h1>
-<h1>{{question.author}}</h1>
+
 <p>{{question.description}}</p>
 
+<a href="{% url 'answer' question.slug %}">Answer Here</a>
 <div class='answer_style'>
 {% if question.answers.all  %}
-    {% for answer in answers %}
+    {% for answer in question.answers.all %}
         <p>{{ answer.user_answer }}</p>
         <p><strong>By:</strong>{{ answer.author }}</p>
     {% endfor %}
