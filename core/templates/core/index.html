@@ -1,22 +1,27 @@
 {% extends 'base.html' %}
+{% load static %} 
 
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="main.js"></script>
+  <link rel="stylesheet" href="main.css">
+  <meta name="viewport" content="initial-scale=1.0,width=device-width">
+  <title>iTunes Search</title>
+  <link rel="stylesheet" href="{% static 'base.css' %}">
+</head>
+<body>
 {% block content %}
   <h1 class="h1">HOME</h1>
      {% for question in questions %}
-    <div class=".container-fluid">  
+    <div class=".container-fluid">
+      <a class="h4" href="{{ question.slug }}"><p>{{ question.title}}</p></a>
+      <code class="h4">{{ question.url}}</code>
       <code class="h4">{{ question.description}}</code>
       <code class="h4"><h4>{{ question.date_added }}</h4></code>
-      
     </div>
-    
-    {% endfor %}
- 
-     
-            
-      
-     
+{% endfor %}
 {% endblock %}
-
+</body>
 </html>

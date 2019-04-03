@@ -13,7 +13,7 @@ class Question(models.Model):
     author = models.ForeignKey(User, related_name='authored_questions', on_delete=models.CASCADE)
     description = models.TextField(max_length=2000, null=True, blank=True)
     date_added = models.DateField('Date Added', auto_now_add=True, null=True, blank=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True)
     liked_by = models.ManyToManyField(to=User, related_name='liked_questions', blank=True)
 
 
@@ -69,10 +69,3 @@ class Star(models.Model):
     user_star = models.ForeignKey(User, related_name='authored_stars',on_delete=models.CASCADE, null=True)
     question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE, related_name="stars")
     starred_at = models.DateTimeField(auto_now_add=True)
-
-
-
-
-
-
-
