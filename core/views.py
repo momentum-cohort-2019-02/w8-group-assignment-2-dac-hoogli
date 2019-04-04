@@ -3,6 +3,8 @@ from core.models import Question, Answer, Star
 from .forms import QuestionForm, AnswerForm 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator
  
 
 
@@ -24,6 +26,9 @@ def index(request):
             return redirect(to='index')
 
     form = QuestionForm()
+    paginator = Paginator(questions, 10)
+    page = request.GET.get('page', 1)
+    questions = paginator.get_page(page)
 
     return render(request, 'core/index.html', context= {'answers':answers, 'questions':questions, 'form':form })
 
