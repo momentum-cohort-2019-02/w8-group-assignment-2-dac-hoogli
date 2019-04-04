@@ -30,6 +30,33 @@
 </form>
 </div>
 {% endif %}
+    
+    {% endfor %}
+  
+    <div class=" bw5 b--moon-gray shadow-5 bg-white  bl br3   mr2  ml7 mr7 gray w-70  h-50 shadow-5  "> 
+      <div class="helvetica black">
+        <h3>Make a question:</h3>
+        <form method="POST" action="{% url 'index' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Post</button>
+        </form>
+      </div>
+    </div>
+    {% for field in form %}
+    <div>
+        {{ field.title }}
+        {{ field.author }} {{ field }}
+        {{ field.description }}
+      
+        {% endfor %}
+    </div>
+
+ 
+     
+            
+      
+     
 {% endblock %}
 
 </body>
