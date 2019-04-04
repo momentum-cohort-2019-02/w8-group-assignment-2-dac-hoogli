@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<h1 class="ml7 white helvetica">{{ user.username }}</h1>
+
+{% for question in questions %}
+<br>
+<br>
+<br>    
+<ul>
+<h3> questions </h3>
+<a class="h4" href="{{ question.get_absolute_url }}"><li>{{ question.title}}</li></a>
+       <p> {{ question.description }}</p>
+</ul>
+        {% endfor %}
+
+        {% endblock %}
