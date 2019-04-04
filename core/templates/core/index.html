@@ -16,6 +16,7 @@
     <div class=".container-fluid">
       <a class="h4" href="{{ question.slug }}"><p>{{ question.title}}</p></a>
       <code class="h4">{{ question.url}}</code>
+      <a href="{% url 'profile_page' username=question.author.username %}"> {{ question.author }}</a>
       <code class="h6">{{ question.description}}</code>
       <code class="h6"><h6>{{ question.date_added }}</h6></code>
     </div>
@@ -57,6 +58,27 @@
             
       
      
+
+<div>
+    {% if questions.has_previous %}
+        <a href="?page=1" class="white hover-red">&laquo; first</a>
+        <a href="?page={{ questions.previous_page_number }}" class="white hover-red"> previous </a>
+    {% endif %}
+
+    <span class="white">
+        Page {{ questions.number }} of {{ questions.paginator.num_pages }}
+    </span>
+
+    {% if questions.has_next %}
+        <a href="?page={{ questions.next_page_number }}" class="white hover-red"> next</a>
+        <a href="?page={{ questions.paginator.num_pages }}" class="white hover-red"> last &raquo;</a>
+    {% endif %}
+</div>
+
+
+
+
+
 {% endblock %}
 
 </body>
