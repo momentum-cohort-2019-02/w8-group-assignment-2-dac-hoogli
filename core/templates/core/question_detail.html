@@ -2,21 +2,21 @@
 
 {% block content%}
 <h1>{{question.title}}</h1>
-<h1>{{question.author}}</h1>
+<h6><strong>By: </strong>{{question.author}}</h6>
 <p>{{question.description}}</p>
 
 <div class='answer_style'>
 {% if question.answers.all  %}
     {% for answer in answers %}
         <p>{{ answer.user_answer }}</p>
-        <p><strong>By:</strong>{{ answer.author }}</p>
+        <p><strong>By: </strong>{{ answer.author }}</p>
     {% endfor %}
 {% else %}
 <p>There are no answers currently.</p>
 {% endif %}
 </div>
 <div class="addNewAnswer">
-<h3>Nice People Answer Here:</h3>
+<h4>Nice People Answer Here:</h4>
 <form method="POST" enctype="multipart/form-data">
 {% csrf_token %}
 {{ form.as_p }}
