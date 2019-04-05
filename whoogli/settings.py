@@ -135,5 +135,6 @@ STATICFILES_DIRS = [
 
 ACCOUNT_ACTIVATION_DAYS = 5
 LOGIN_REDIRECT_URL = "/"
-
+REGISTRATION_AUTO_LOGIN = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+

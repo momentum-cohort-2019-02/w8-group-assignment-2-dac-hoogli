@@ -7,51 +7,46 @@
   <meta charset="utf-8">
   <script src="main.js"></script>
   <meta name="viewport" content="initial-scale=1.0,width=device-width">
-  <title>iTunes Search</title>
+  <title>Questions</title>
 </head>
 <body>
 {% block content %}
-  <h1 class="h1">A Place For Questions</h1>
+ 
      {% for question in questions %}
-    <div class=".container-fluid">
-      <a class="h4" href="{{ question.slug }}"><p>{{ question.title}}</p></a>
-      <code class="h4">{{ question.url}}</code>
-      <a href="{% url 'profile_page' username=question.author.username %}"> {{ question.author }}</a>
-      <code class="h6">{{ question.description}}</code>
-      <code class="h6"><h6>{{ question.date_added }}</h6></code>
+    <div class="  w-70 mh7 mr7   bw1 ph4 mb4 mt1    ">
+      <a class="baskerville fw5 f2 link color-inherit " href="{{ question.slug }}"><div class="baskerville i  lh-title tl mb1 hover-gold bb   ">{{ question.title}}</div></a>
+      
+     
+      <code class=" f4 baskerville mb1  ">{{ question.description}}</code>
+      <br>
+      <div class=" mt3  ">posted by
+      <a href="{% url 'profile_page' username=question.author.username %}" class="link:link hover-gold mt2  ">{{ question.author }}</a></div>
+      
+      <code class=""><h6>{{ question.date_added }}</h6></code>
     </div>
-{% endfor %}
-{% if request.user.is_authenticated %}
-<div class="newQuestionPost">
-<h4>Feel free to ask a question:</h4>
-<form method="POST" enctype="multipart/form-data">
-{% csrf_token %}
-{{ form.as_p }}
-<button type="submit">Pose</button>
-</form>
-</div>
-{% endif %}
-    
     {% endfor %}
+
+    
+    
   
-    <div class=" bw5 b--moon-gray shadow-5 bg-white  bl br3   mr2  ml7 mr7 gray w-70  h-50 shadow-5  "> 
-      <div class="helvetica black">
-        <h3>Make a question:</h3>
+    <div class=" mh7 mr7 b-- bw2 ph4 w-70  "> 
+      <div class=" ba b--gold bg-gold ">
+         
+        <div class="fw3 f2 baskerville i bb bt  ">Make a question:</div>
+        
         <form method="POST" action="{% url 'index' %}" enctype="multipart/form-data">
+          {% if request.user.is_authenticated %}
           {% csrf_token %}
-          {{ form.as_p }}
-          <button type="submit">Post</button>
+          {{ form.as_table }}
+          <button type="submit" class="f1 ">Post</button>
+
+          
+
+          {% endif %}
         </form>
       </div>
     </div>
-    {% for field in form %}
-    <div>
-        {{ field.title }}
-        {{ field.author }} {{ field }}
-        {{ field.description }}
-      
-        {% endfor %}
-    </div>
+  
 
  
      
@@ -61,22 +56,27 @@
 
 <div>
     {% if questions.has_previous %}
-        <a href="?page=1" class="white hover-red">&laquo; first</a>
-        <a href="?page={{ questions.previous_page_number }}" class="white hover-red"> previous </a>
+        <a href="?page=1" class="tc f3 fw4  ">&laquo; first</a>
+        <a href="?page={{ questions.previous_page_number }}" class="tc f3 fw4"> previous </a>
     {% endif %}
 
-    <span class="white">
+    <span class="">
         Page {{ questions.number }} of {{ questions.paginator.num_pages }}
     </span>
 
     {% if questions.has_next %}
-        <a href="?page={{ questions.next_page_number }}" class="white hover-red"> next</a>
-        <a href="?page={{ questions.paginator.num_pages }}" class="white hover-red"> last &raquo;</a>
+        <a href="?page={{ questions.next_page_number }}" class="tc f3 fw4"> next</a>
+        <a href="?page={{ questions.paginator.num_pages }}" class="tc f3 fw4"> last &raquo;</a>
     {% endif %}
 </div>
 
 
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
 {% endblock %}

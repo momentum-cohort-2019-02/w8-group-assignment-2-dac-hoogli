@@ -1,26 +1,68 @@
 {% extends "base.html" %}
 
 {% block content%}
-<h1>{{question.title}}</h1>
-<a href="{% url 'profile_page' username=question.author.username %}"><h6> <strong>By: </strong>{{question.author}}</h6></a>
-<p>{{question.description}}</p>
+<div class="bt bb  w-70 mh7 mr7 b--black-50  bw2 ph4 mb1 mt1    ">
+        <a class="baskerville fw5 f1 link color-inherit " href="{{ question.slug }}"><div class="baskerville i  lh-title tl mb1    ">{{ question.title}}</div>
+<a href="{% url 'profile_page' username=question.author.username %}">
+<div class=" mt3 ">posted by
+<a href="{% url 'profile_page' username=question.author.username %}">{{ question.author }}</a></div>
 
-<div class='answer_style'>
+
+
+
+<p class="f3 ">{{question.description}}</p>
+
+<div class="answer_style baskerville i f4 bb bt bg-white-60">
 {% if question.answers.all  %}
     {% for answer in answers %}
-        <p>{{ answer.user_answer }}</p>
-        <p><strong>By: </strong>{{ answer.author }}</p>
+        
+        <p><strong class=" f5  ">By: </strong>{{ answer.author }}</p>
+        <p class=" bb bt  ">{{ answer.user_answer }}</p>
     {% endfor %}
 {% else %}
 <p>There are no answers currently.</p>
 {% endif %}
 </div>
 <div class="addNewAnswer">
-<h4>Nice People Answer Here:</h4>
-<form method="POST" enctype="multipart/form-data">
+<div class="f4">Add an Answer</div>
+<form method="POST" enctype="multipart/form-data" class="bg-gold bb bt">
 {% csrf_token %}
-{{ form.as_p }}
+{{ form.as_table }}
 <button type="submit">Submit Answer</button>
 </form>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+<div>
+        {% if questions.has_previous %}
+            <a href="?page=1" class="tc f3 fw4  ">&laquo; first</a>
+            <a href="?page={{ questions.previous_page_number }}" class="tc f3 fw4"> previous </a>
+        {% endif %}
+    
+        <span class="">
+            Page {{ questions.number }} of {{ questions.paginator.num_pages }}
+        </span>
+    
+        {% if questions.has_next %}
+            <a href="?page={{ questions.next_page_number }}" class="tc f3 fw4"> next</a>
+            <a href="?page={{ questions.paginator.num_pages }}" class="tc f3 fw4"> last &raquo;</a>
+        {% endif %}   
+
+    </div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
 {% endblock %}
