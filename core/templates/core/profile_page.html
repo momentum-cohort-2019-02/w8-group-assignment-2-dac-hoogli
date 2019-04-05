@@ -1,17 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content%}
-<h1 class="ml7 white helvetica">{{ user.username }}</h1>
+<h1 class="ml7 fw1  baskerville  i  f1   ">{{ user.username }}'s questions!</h1>
 
 {% for question in questions %}
-<br>
-<br>
-<br>    
-<ul>
-<h3> questions </h3>
-<a class="h4" href="{{ question.get_absolute_url }}"><li>{{ question.title}}</li></a>
-       <p> {{ question.description }}</p>
-</ul>
-        {% endfor %}
+
+
+<div class="bt bb  w-70 mh7 mr7 b--black-50  bw2 ph4 mb1 mt1   pb3   ">
+        <a class="baskerville fw5 f1 link color-inherit " href="{{ question.slug }}"><div class="baskerville i  lh-title tl mb1    ">{{ question.title}}</div></a>
+        
+       
+        <code class=" baskerville f5  mb1  ">{{ question.description}}</code>
+
+</div>
+
+{% endfor %}
+<div>
+        {% if questions.has_previous %}
+            <a href="?page=1" class="tc f3 fw4  ">&laquo; first</a>
+            <a href="?page={{ questions.previous_page_number }}" class="tc f3 fw4"> previous </a>
+        {% endif %}
+    
+        <span class="">
+            Page {{ questions.number }} of {{ questions.paginator.num_pages }}
+        </span>
+    
+        {% if questions.has_next %}
+            <a href="?page={{ questions.next_page_number }}" class="tc f3 fw4"> next</a>
+            <a href="?page={{ questions.paginator.num_pages }}" class="tc f3 fw4"> last &raquo;</a>
+        {% endif %}   
+
+    </div>
+       <br>
+       <br>
+       <br>
+       <br>
+       <br>
 
         {% endblock %}
