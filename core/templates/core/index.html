@@ -1,15 +1,6 @@
 {% extends 'base.html' %}
 {% load static %} 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <script src="main.js"></script>
-  <meta name="viewport" content="initial-scale=1.0,width=device-width">
-  <title>Questions</title>
-</head>
-<body>
 {% block content %}
  
      {% for question in questions %}
@@ -34,7 +25,7 @@
          
         <div class="fw3 f2 baskerville i bb bt  ">Make a question:</div>
         
-        <form method="POST" action="{% url 'index' %}" enctype="multipart/form-data">
+        <form method="POST" action="{% url 'index' %}" id="questionForm" enctype="multipart/form-data">
           {% if request.user.is_authenticated %}
           {% csrf_token %}
           {{ form.as_table }}
@@ -80,6 +71,3 @@
 
 
 {% endblock %}
-
-</body>
-</html>
