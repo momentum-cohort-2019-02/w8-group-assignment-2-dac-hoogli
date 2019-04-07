@@ -6,14 +6,14 @@ class QuestionForm(forms.ModelForm):
         model = Question
         # exclude = ['date_added', 'slug', 'liked_by']
         fields = ['title', 'author', 'description']
-        widgets = {
-            'description': forms.TextInput(attrs={
-                'id': 'questionForm',
-                'required': True,
-                'placeholder': 'pose a question'
-            })
+        # widgets = {
+        #     'description': forms.TextInput(attrs={
+        #         'id': 'questionForm',
+        #         'required': True,
+        #         'placeholder': 'pose a question'
+        #     })
 
-        }
+        # }
         
 class AnswerForm(forms.ModelForm):
     class Meta:
