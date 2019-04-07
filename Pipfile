@@ -10,6 +10,7 @@ prospector = "*"
 django = "*"
 psycopg2 = "*"
 django-registration-redux = "*"
+jquery = "*"
 
 [requires]
 python_version = "3.7"

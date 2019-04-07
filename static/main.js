@@ -1,16 +1,26 @@
-window.addEventListener('DOMContentLoaded', (event) => {
-  console.log('DOM fully loaded and parsed')
-  document.querySelector('#questionForm').addEventListener('submit', function (event) {
-    event.preventDefault()
-    const questionTitle = document.querySelector('#id_title')
-    const questionAuthor = document.querySelector('#id_author')
-    const questionDescription = document.querySelector('#id_description')
-    console.log('form submitted!', event.target, questionTitle.value, questionAuthor.value, questionDescription.value)
-    questionDetail()
-  })
+
+
+
+function answerFunction(){
+  alert("thank you for your answer!");
+
+}
+
+function questionFunction(){
+  alert("thank you for your question!");
+}
+
+
+
+
+var popup1 = document.getElementById("popup-1")
+var openPopup1 = document.getElementById("open-popup-1")
+var closePopup1 = document.getElementById('close-popup-1')
+
+openPopup1.addEventListener('click', () => {
+	popup1.style.display = "block";
 })
 
-// AJAX for posting questions
-function questionDetail () {
-  console.log('create question detail page is working!') // sanity check
-}
+closePopup1.addEventListener('click', () => {
+	popup1.style.display = "none";
+})

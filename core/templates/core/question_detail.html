@@ -28,7 +28,7 @@
 <form method="POST" enctype="multipart/form-data" class="bg-gold bb bt">
 {% csrf_token %}
 {{ form.as_table }}
-<button type="submit">Submit Answer</button>
+<button type="submit" onclick="answerFunction()">Submit Answer</button>
 </form>
 </div>
 

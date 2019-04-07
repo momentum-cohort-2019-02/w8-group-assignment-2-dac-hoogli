@@ -19,33 +19,28 @@
 
     
     
-  
-    <div class=" mh7 mr7 b-- bw2 ph4 w-70  "> 
-      <div class=" ba b--gold bg-gold ">
-         
-        <div class="fw3 f2 baskerville i bb bt  ">Make a question:</div>
-        
-        <form method="POST" action="{% url 'index' %}" id="questionForm" enctype="multipart/form-data">
+       
+    <div class=" mh7 mr7 b-- bw2 ph4 w-70 flex w-100   "> 
+      <div class=" ba b--gold w-70  ">
+          
+          
+        <button class="fw3 f2 baskerville i bb bt" id="open-popup-1">Make a question:</button>
+        <div id="popup-1" class="dn absolute "> 
+        <div>
+        <form method="POST" action="{% url 'index' %}" id="questionform" enctype="multipart/form-data" class="questionform popup-content absolute b--black-90  b--solid bg-gold mw7   ">
           {% if request.user.is_authenticated %}
           {% csrf_token %}
           {{ form.as_table }}
-          <button type="submit" class="f1 ">Post</button>
-
-          
-
+          <button id="close-popup-1" type="submit"  class="f3">Post</button>
           {% endif %}
         </form>
       </div>
+        
+      </div>
     </div>
-  
-
+  </div>
+<div class="mt3  mb6 ml7 f-5    ">
  
-     
-            
-      
-     
-
-<div>
     {% if questions.has_previous %}
         <a href="?page=1" class="tc f3 fw4  ">&laquo; first</a>
         <a href="?page={{ questions.previous_page_number }}" class="tc f3 fw4"> previous </a>
@@ -56,18 +51,11 @@
     </span>
 
     {% if questions.has_next %}
-        <a href="?page={{ questions.next_page_number }}" class="tc f3 fw4"> next</a>
-        <a href="?page={{ questions.paginator.num_pages }}" class="tc f3 fw4"> last &raquo;</a>
+        <a href="?page={{ questions.next_page_number }}" class="tc f-6  fw4"> next</a>
+        <a href="?page={{ questions.paginator.num_pages }}" class="tc f-6  fw4"> last &raquo;</a>
     {% endif %}
 </div>
 
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
+<script src="{% static 'main.js' %}"></script>
 {% endblock %}
