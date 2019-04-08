@@ -25,7 +25,7 @@
         <form method="POST" enctype="multipart/form-data" class="bg-gold bb bt popup-content b--black-90 b--solid ml7 mr7 br4 tc    pa2 ">
         {% csrf_token %}
         {{ form }}
-        <button type="submit"  id="close-popup-1" class=" f4 flex center">Submit Answer</button>
+        <button type="submit"  id="close-popup-1" onclick="answerFunction()" class=" f4 flex center">Submit Answer</button>
         </form>
         </div>
         </div>
