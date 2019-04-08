@@ -8,11 +8,16 @@ from datetime import date
 
 from django.utils import timezone
 from django.db import models
-from core.hashids import hashids
-from core.textutils import get_hashtags
+#from hashids import hashids
+#from hashid_field import HashidField
+#from hashid_field import HashidAutoField, HashidField
+#from hashids import hashids
+#from textutils import get_hashtags
 
 import uuid
  
+from hashids import Hashids
+hashids = Hashids(min_length=4)
 
 # Create your models here.
 #Django has a built in user, so I didn't see the need to create a custom user
@@ -68,7 +73,7 @@ class Answer(models.Model):
     question = models.ForeignKey(to=Question, null=True, blank=True, on_delete=models.CASCADE, related_name="answers")
     answer_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     liked_by = models.ManyToManyField(to=User, related_name="liked_answers", blank=True)
-    starred_at = models.DateTimeField(auto_now_add=True)
+    starred_at = models.DateTimeField(auto_now_add=True,null=True)
   
 
     class Meta:

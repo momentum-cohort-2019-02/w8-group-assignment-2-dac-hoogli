@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -43,8 +42,8 @@ INSTALLED_APPS = [
     'crispy_forms'
 ]
 
-import django
-django.setup()
+# import django
+# django.setup()
 
 
 MIDDLEWARE = [
@@ -144,3 +143,19 @@ LOGIN_REDIRECT_URL = "/"
 REGISTRATION_AUTO_LOGIN = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+#hashid stuff
+HASHID_FIELD_SALT = "a long and secure salt value that is not the same as SECRET_KEY"
+# Note: You can generate a secure key with:
+#     from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())
+
+# settings.py
+REST_FRAMEWORK = dict(
+    SERIALIZER_EXTENSIONS=dict(
+        USE_HASH_IDS=True,
+        HASH_IDS_SOURCE='my_app.HASH_IDS'
+    )
+)
+
+# my_app/__init__.py
+import hashids
+HASH_IDS = hashids.Hashids(salt='MYSALT')

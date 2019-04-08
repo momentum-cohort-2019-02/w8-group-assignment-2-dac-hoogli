@@ -14,14 +14,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path, include, re_path, register_converter
 from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from core import views
 
+
 #Add URL maps to redirect the base URL to our application
+
+class HashidConverter:
+    regex = '[a-zA-Z0-9]{4,}'
+
+    def to_python(self, value):
+        return value
+
+    def to_url(self, value):
+        return value
+
+register_converter(HashidConverter, 'hashid')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,13 +45,15 @@ urlpatterns = [
     path('users/<str:username>/', views.profile, name='profile_page'),
 
     path(
-            'answers/<hashid:answer_id>/starred/',
-            core_views.mark_answer_starred,
-            name="mark_answer_starred"),
-            #thanks busyb
+                'answers/<hashid:answer_id>/starred/',
+                views.mark_answer_starred,
+                name="mark_answer_starred"),
+                #thanks busyb
 
 
 ]
+
+ 
 
 # Use static() to add url mapping to serve static files during development (only)
 
