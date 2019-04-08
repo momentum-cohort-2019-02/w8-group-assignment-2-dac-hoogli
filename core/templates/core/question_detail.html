@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content%}
-<div class="bt bb  w-70 mh7 mr7 b--black-50  bw2 ph4 mb1 mt1    ">
-        <a class="baskerville fw5 f1 link color-inherit " href="{{ question.slug }}"><div class="baskerville i  lh-title tl mb1    ">{{ question.title}}</div>
+<div class="bt bb  w-70 mh7 mr7 b--black-50  bw2 ph4 mb1 mt><div class="baskerville i  lh-title tl mb1    ">{{ question.title}}</div>
 <a href="{% url 'profile_page' username=question.author.username %}">
 <div class=" mt3 ">posted by
 <a href="{% url 'profile_page' username=question.author.username %}">{{ question.author }}</a></div>
@@ -15,7 +14,7 @@
         <p><strong class=" f4    ">Answer </strong><div class="f2">{{ answer.author }}</div></p>
         <p> {{answer.answer_time }}</p>
         <p class="  bb border f3  i fw1 f-headline     ">{{ answer.user_answer }}</p>
-        <a href="{% url 'mark_question_starred %}">Starred Answer</a>
+        
     </div>
     {% endfor %}
 {% else %}
