@@ -10,8 +10,9 @@ prospector = "*"
 django = "*"
 psycopg2 = "*"
 django-registration-redux = "*"
-jquery = "*"
 django-crispy-forms = "*"
+django-hashid-field = "*"
+hashid = "*"
 
 [requires]
 python_version = "3.7"

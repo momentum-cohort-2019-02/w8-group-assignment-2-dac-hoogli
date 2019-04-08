@@ -4,6 +4,21 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+from datetime import date
+
+from django.utils import timezone
+from django.db import models
+#from hashids import hashids
+#from hashid_field import HashidField
+#from hashid_field import HashidAutoField, HashidField
+#from hashids import hashids
+#from textutils import get_hashtags
+
+import uuid
+ 
+from hashids import Hashids
+hashids = Hashids(min_length=4)
+
 # Create your models here.
 #Django has a built in user, so I didn't see the need to create a custom user
 
@@ -50,6 +65,7 @@ class Question(models.Model):
     def get_absolute_url(self):
         return reverse('question_detail', kwargs={"slug": self.slug})
 
+
 class Answer(models.Model):
     """Allows logged in User to answer on a particular Question."""
     user_answer = models.TextField(null=True)
@@ -57,6 +73,7 @@ class Answer(models.Model):
     question = models.ForeignKey(to=Question, null=True, blank=True, on_delete=models.CASCADE, related_name="answers")
     answer_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     liked_by = models.ManyToManyField(to=User, related_name="liked_answers", blank=True)
+    starred_at = models.DateTimeField(auto_now_add=True,null=True)
   
 
     class Meta:
@@ -64,10 +81,46 @@ class Answer(models.Model):
 
     def __str__(self):
         """String for representing the string representation of object (in Admin site etc.)."""
+        """thanks busyb"""
         return self.user_answer
+    
+    @property
+    def hashid(self):
+        return hashids.encode(self.pk)
+    def is_starred(self):
+        return self.starred_at is not None
+
+
+    def mark_starred(self, save=True):
+        """
+        Thanks busyb
+        Mark answer as starred at current time.
+        Saves completion to DB until `save` is set to False.
+        """
+        self.starred_at = timezone.now()
+        if save:
+            self.save()
+        return self
+
 
 
 class Star(models.Model):
     user_star = models.ForeignKey(User, related_name='authored_stars',on_delete=models.CASCADE, null=True)
     question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE, related_name="stars")
-    starred_at = models.DateTimeField(auto_now_add=True)
+    
+
+    
+
+
+class AnswerQuerySet(models.QuerySet):
+    def with_hashid(self, hashid):
+        ids = hashids.decode(hashid)
+        # TODO add check -- if len is 0, hashid is invalid, should raise exception
+        if len(ids) == 1:
+            return self.get(pk=ids[0])
+        return self.filter(pk__in=ids)
+    def notstarred(self):
+        return self.filter(liked_by__isnull=True)
+    def starred(self):
+        return self.filter(liked_by__isnull=False)
+
