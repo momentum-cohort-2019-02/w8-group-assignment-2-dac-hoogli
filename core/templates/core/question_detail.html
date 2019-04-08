@@ -11,10 +11,14 @@
 {% if question.answers.all  %}
     {% for answer in answers %}
     <div class="mv2" id="answer-{{ answer.id }}">
-        <p><strong class=" f4    ">Answer </strong><div class="f2">{{ answer.author }}</div></p>
+        <p><strong class=" f4    ">Answer by </strong><div class="f2">{{ answer.author }}</div></p>
         <p> {{answer.answer_time }}</p>
         <p class="  bb border f3  i fw1 f-headline     ">{{ answer.user_answer }}</p>
+
+        <div>
+              <button id="buttontostar" type="submit" >Star It</button>
         
+        </div>
     </div>
     {% endfor %}
 {% else %}

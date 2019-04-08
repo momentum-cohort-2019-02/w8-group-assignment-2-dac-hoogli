@@ -2,3 +2,36 @@
      margin:auto;
 
  }
+
+ #buttontostar{
+    background-color: rgb(245, 245, 56); 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+  #buttonstarred{
+    background-color: rgb(220, 125, 125); 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+  #buttonnotstarred{
+    background-color: rgb(220, 220, 220); 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
