@@ -11,7 +11,7 @@
               {% if request.user.is_authenticated %}
               {% csrf_token %}
               {{ form }}
-              <button id="close-popup-1" type="submit"  class="f4  tc flex center  ">&nbsp;&nbsp;&nbsp;Pose&nbsp;&nbsp;&nbsp;</button>
+              <button id="close-popup-1" type="submit" onclick="questionFunction()" class="f4  tc flex center  ">&nbsp;&nbsp;&nbsp;Pose&nbsp;&nbsp;&nbsp;</button>
               {% endif %}
             </form>
           </div>
