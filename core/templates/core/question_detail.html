@@ -1,36 +1,37 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content%}
 <div class="bt bb  w-70 mh7 mr7 b--black-50  bw2 ph4 mb1 mt1    ">
         <a class="baskerville fw5 f1 link color-inherit " href="{{ question.slug }}"><div class="baskerville i  lh-title tl mb1    ">{{ question.title}}</div>
 <a href="{% url 'profile_page' username=question.author.username %}">
 <div class=" mt3 ">posted by
 <a href="{% url 'profile_page' username=question.author.username %}">{{ question.author }}</a></div>
+<p class="f3 bb ">{{question.description}}</p>
 
-
-
-
-<p class="f3 ">{{question.description}}</p>
-
-<div class="answer_style baskerville i f4 bb bt bg-white-60">
+<div class="answer_style baskerville i f4 ba bg-white-60 pa4 br4 bw4   ">
 {% if question.answers.all  %}
     {% for answer in answers %}
         
-        <p><strong class=" f5  ">By: </strong>{{ answer.author }}</p>
-        <p class=" bb bt  ">{{ answer.user_answer }}</p>
+        <p><strong class=" f4    ">Answer </strong><div class="f2">{{ answer.author }}</div></p>
+        <p> {{answer.answer_time }}</p>
+        <p class="  bb border f3  i fw1 f-headline     ">{{ answer.user_answer }}</p>
     {% endfor %}
 {% else %}
 <p>There are no answers currently.</p>
 {% endif %}
 </div>
-<div class="addNewAnswer">
-<div class="f4">Add an Answer</div>
-<form method="POST" enctype="multipart/form-data" class="bg-gold bb bt">
-{% csrf_token %}
-{{ form.as_table }}
-<button type="submit">Submit Answer</button>
-</form>
-</div>
+<div class="b-- bw2 ph3  flex  "> 
+        <div id="popup-1" class="dn">
+        <form method="POST" enctype="multipart/form-data" class="bg-gold bb bt popup-content b--black-90 b--solid ml7 mr7 br4 tc    pa2 ">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit"  id="close-popup-1" class=" f4 flex center">Submit Answer</button>
+        </form>
+        </div>
+        </div>
+   
+                
+        <button id="open-popup-1" class="  b-- bw2 ph3 f-5  flex ml7  ">Add an Answer</button>
 
 
 
@@ -42,27 +43,19 @@
 
 
 
-<div>
-        {% if questions.has_previous %}
-            <a href="?page=1" class="tc f3 fw4  ">&laquo; first</a>
-            <a href="?page={{ questions.previous_page_number }}" class="tc f3 fw4"> previous </a>
-        {% endif %}
-    
-        <span class="">
-            Page {{ questions.number }} of {{ questions.paginator.num_pages }}
-        </span>
-    
-        {% if questions.has_next %}
-            <a href="?page={{ questions.next_page_number }}" class="tc f3 fw4"> next</a>
-            <a href="?page={{ questions.paginator.num_pages }}" class="tc f3 fw4"> last &raquo;</a>
-        {% endif %}   
 
-    </div>
 
+
+
+
+
+
+
+  
 <br>
 <br>
 <br>
 <br>
 <br>
-
+<script src="{% static 'main.js' %}"></script>
 {% endblock %}

@@ -2,7 +2,26 @@
 {% load static %} 
 
 {% block content %}
- 
+{% load crispy_forms_tags %}
+<div class=" mh7 mr7 b-- bw2 ph3  w-70 flex w-100   "> 
+    <div class="  w-70 tc  ">
+        <div id="popup-1" class="dn  "> 
+            <div>
+            <form method="POST" action="{% url 'index' %}" id="questionform" enctype="multipart/form-data" class="questionform popup-content  b--black-90  b--solid bg-gold mw7 ml6 pa2  flex-auto          ">
+              {% if request.user.is_authenticated %}
+              {% csrf_token %}
+              {{ form }}
+              <button id="close-popup-1" type="submit"  class="f4  tc flex center  ">&nbsp;&nbsp;&nbsp;Pose&nbsp;&nbsp;&nbsp;</button>
+              {% endif %}
+            </form>
+          </div>
+            
+          </div>
+        
+      <button class="fw3 f1   baskerville i bb bt tc " id="open-popup-1">Pose a Question</button>
+      
+  </div>
+</div>
      {% for question in questions %}
     <div class="  w-70 mh7 mr7   bw1 ph4 mb4 mt1    ">
       <a class="baskerville fw5 f2 link color-inherit " href="{{ question.slug }}"><div class="baskerville i  lh-title tl mb1 hover-gold bb   ">{{ question.title}}</div></a>
@@ -19,36 +38,13 @@
 
     
     
-  
-    <div class=" mh7 mr7 b-- bw2 ph4 w-70  "> 
-      <div class=" ba b--gold bg-gold ">
-         
-        <div class="fw3 f2 baskerville i bb bt  ">Make a question:</div>
-        
-        <form method="POST" action="{% url 'index' %}" id="questionForm" enctype="multipart/form-data">
-          {% if request.user.is_authenticated %}
-          {% csrf_token %}
-          {{ form.as_table }}
-          <button type="submit" class="f1 ">Post</button>
-
-          
-
-          {% endif %}
-        </form>
-      </div>
-    </div>
-  
-
+       
+    
+<div class="mt3  mb6 ml7 f4 tc mr7   ">
  
-     
-            
-      
-     
-
-<div>
     {% if questions.has_previous %}
         <a href="?page=1" class="tc f3 fw4  ">&laquo; first</a>
-        <a href="?page={{ questions.previous_page_number }}" class="tc f3 fw4"> previous </a>
+        <a href="?page={{ questions.previous_page_number }}" class="tc f4 fw4 ba"> previous </a>
     {% endif %}
 
     <span class="">
@@ -56,18 +52,11 @@
     </span>
 
     {% if questions.has_next %}
-        <a href="?page={{ questions.next_page_number }}" class="tc f3 fw4"> next</a>
-        <a href="?page={{ questions.paginator.num_pages }}" class="tc f3 fw4"> last &raquo;</a>
+        <a href="?page={{ questions.next_page_number }}" class="tc f4   fw4"> next</a>
+        <a href="?page={{ questions.paginator.num_pages }}" class="tc f4  fw4"> last &raquo;</a>
     {% endif %}
 </div>
 
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
+<script src="{% static 'main.js' %}"></script>
 {% endblock %}
