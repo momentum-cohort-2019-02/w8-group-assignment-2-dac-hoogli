@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'registration',
+    'django.contrib.contenttypes',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +42,10 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'crispy_forms'
 ]
+
+import django
+django.setup()
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

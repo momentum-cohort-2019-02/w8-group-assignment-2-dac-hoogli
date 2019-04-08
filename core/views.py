@@ -5,7 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
- 
+
+
 
 
 def index(request):
@@ -71,4 +72,17 @@ def delete_question(request, slug):
     question = Question.objects.get(slug=slug)
     question.delete()
     return redirect(to='index')
+
+
+# thanks busyb
+@require_http_methods(['POST'])
+@login_required
+def mark_answer_starred(request, answer_id):
+    answer = request.user.answers.with_hashid(answer_id)
+    if answer is None:
+        raise Http404('No answer matches the given query.')
+    answer.answer_starred()
+    if request.is_ajax():
+        return JsonResponse({"id": answer.hashid, "starred": True})
+    return redirect('question_detail')
 

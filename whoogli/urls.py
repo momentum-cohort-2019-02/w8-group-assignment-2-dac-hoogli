@@ -31,6 +31,14 @@ urlpatterns = [
     path('accounts/profile/', RedirectView.as_view(url='/questions/', permanent=True)),
     re_path(r'^accounts/', include('registration.backends.default.urls')),
     path('users/<str:username>/', views.profile, name='profile_page'),
+
+    path(
+            'answers/<hashid:answer_id>/starred/',
+            core_views.mark_answer_starred,
+            name="mark_answer_starred"),
+            #thanks busyb
+
+
 ]
 
 # Use static() to add url mapping to serve static files during development (only)
